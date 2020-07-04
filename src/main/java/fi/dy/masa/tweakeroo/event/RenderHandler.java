@@ -6,6 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import fi.dy.masa.malilib.gui.GuiBase;
@@ -103,6 +104,12 @@ public class RenderHandler implements IRenderer
         if (FeatureToggle.TWEAK_FLEXIBLE_BLOCK_PLACEMENT.getBooleanValue() &&
             entity != null &&
             mc.crosshairTarget != null &&
+            !mc.player.isSpectator() &&
+            // Using item.isEnchantable because enchantable things often aren't placeable. Would also work with isDamageable
+            // in Vanilla, but (I think) some mods make custom blocks damageable to express charge, etc
+        	((!mc.player.getStackInHand(Hand.MAIN_HAND).isEnchantable() && !mc.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ) ||
+        	 (!mc.player.getStackInHand(Hand.OFF_HAND).isEnchantable()  && !mc.player.getStackInHand(Hand.OFF_HAND).isEmpty()  )
+        	) &&
             mc.crosshairTarget.getType() == HitResult.Type.BLOCK &&
             (Hotkeys.FLEXIBLE_BLOCK_PLACEMENT_ROTATION.getKeybind().isKeybindHeld() ||
              Hotkeys.FLEXIBLE_BLOCK_PLACEMENT_OFFSET.getKeybind().isKeybindHeld() ||
