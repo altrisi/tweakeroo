@@ -106,7 +106,7 @@ public class RenderHandler implements IRenderer
             mc.crosshairTarget != null &&
             !mc.player.isSpectator() &&
             // Using item.isEnchantable because enchantable things often aren't placeable. Would also work with isDamageable
-            // in Vanilla, but (I think) some mods make custom blocks damageable to express charge, etc
+            // in Vanilla (tested), but (I think) some mods make custom blocks damageable to express charge, etc
         	((!mc.player.getStackInHand(Hand.MAIN_HAND).isEnchantable() && !mc.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ) ||
         	 (!mc.player.getStackInHand(Hand.OFF_HAND).isEnchantable()  && !mc.player.getStackInHand(Hand.OFF_HAND).isEmpty()  )
         	) &&
