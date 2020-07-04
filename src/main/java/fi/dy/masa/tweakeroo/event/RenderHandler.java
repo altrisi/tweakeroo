@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -105,10 +106,14 @@ public class RenderHandler implements IRenderer
             entity != null &&
             mc.crosshairTarget != null &&
             !mc.player.isSpectator() &&
-            // Using item.isEnchantable because enchantable things often aren't placeable. Would also work with isDamageable
-            // in Vanilla (tested), but (I think) some mods make custom blocks damageable to express charge, etc
-        	((!mc.player.getStackInHand(Hand.MAIN_HAND).isEnchantable() && !mc.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ) ||
-        	 (!mc.player.getStackInHand(Hand.OFF_HAND).isEnchantable()  && !mc.player.getStackInHand(Hand.OFF_HAND).isEmpty()  )
+            // Basically checking if it's an instance of a block 
+        	(
+        	  (!mc.player.getStackInHand(Hand.MAIN_HAND).isEmpty() && 
+        		 (mc.player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof BlockItem) 
+        	  ) ||
+        	  (!mc.player.getStackInHand(Hand.OFF_HAND).isEmpty() && 
+        		 (mc.player.getStackInHand(Hand.OFF_HAND).getItem() instanceof BlockItem)
+        	  )
         	) &&
             mc.crosshairTarget.getType() == HitResult.Type.BLOCK &&
             (Hotkeys.FLEXIBLE_BLOCK_PLACEMENT_ROTATION.getKeybind().isKeybindHeld() ||
