@@ -106,7 +106,7 @@ public class RenderHandler implements IRenderer
             entity != null &&
             mc.crosshairTarget != null &&
             !mc.player.isSpectator() &&
-            // Basically checking if it's an instance of a block 
+            // Basically checking if it's an instance of a BlockItem. Also checking if it's empty since AIR is a block (?)
         	(
         	  (!mc.player.getStackInHand(Hand.MAIN_HAND).isEmpty() && 
         		 (mc.player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof BlockItem) 
